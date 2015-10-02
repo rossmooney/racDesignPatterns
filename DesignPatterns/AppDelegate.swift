@@ -3,7 +3,6 @@
 //  DesignPatterns
 //
 //  Created by Ross M Mooney on 10/1/15.
-//  Copyright © 2015 BoomTown. All rights reserved.
 //
 
 import UIKit
@@ -47,7 +46,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Core Data stack
 
     lazy var applicationDocumentsDirectory: NSURL = {
-        // The directory the application uses to store the Core Data store file. This code uses a directory named "com.boomtownroi.DesignPatterns" in the application's documents Application Support directory.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
         return urls[urls.count-1]
     }()

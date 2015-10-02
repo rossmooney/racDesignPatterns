@@ -490,7 +490,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = DesignPatterns/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.boomtownroi.DesignPatterns;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rossmooney.DesignPatterns;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -502,7 +502,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = DesignPatterns/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.boomtownroi.DesignPatterns;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rossmooney.DesignPatterns;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -513,7 +513,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = DesignPatternsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.boomtownroi.DesignPatternsTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rossmooney.DesignPatternsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DesignPatterns.app/DesignPatterns";
 			};
@@ -525,7 +525,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = DesignPatternsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.boomtownroi.DesignPatternsTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rossmooney.DesignPatternsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DesignPatterns.app/DesignPatterns";
 			};
@@ -536,7 +536,7 @@
 			buildSettings = {
 				INFOPLIST_FILE = DesignPatternsUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.boomtownroi.DesignPatternsUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rossmooney.DesignPatternsUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_TARGET_NAME = DesignPatterns;
 				USES_XCTRUNNER = YES;
@@ -548,7 +548,7 @@
 			buildSettings = {
 				INFOPLIST_FILE = DesignPatternsUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.boomtownroi.DesignPatternsUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rossmooney.DesignPatternsUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_TARGET_NAME = DesignPatterns;
 				USES_XCTRUNNER = YES;

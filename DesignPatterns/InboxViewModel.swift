@@ -3,7 +3,6 @@
 //  DesignPatterns
 //
 //  Created by Ross M Mooney on 10/2/15.
-//  Copyright © 2015 BoomTown. All rights reserved.
 //
 
 import Foundation
