@@ -18,7 +18,7 @@ class ViewController: UIViewController {
         
         self.viewModel = InboxViewModel()
         
-        self.viewModel.inboxStateSignal.observeNext({ state in
+        self.viewModel.stateSignal.observeNext({ state in
             switch state {
             case .Default:
                 self.view.backgroundColor = UIColor.blackColor()
@@ -26,12 +26,14 @@ class ViewController: UIViewController {
                 self.view.backgroundColor = UIColor.yellowColor()
             case .Done:
                 self.view.backgroundColor = UIColor.greenColor()
+            case .Error:
+                self.view.backgroundColor = UIColor.redColor()
             }
         })
     }
     
     override func viewDidAppear(animated: Bool) {
-        sendNext(self.viewModel.inboxRefreshSink, ())
+        sendNext(self.viewModel.refreshSink, ())
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,7 +42,6 @@ class ViewController: UIViewController {
     }
 
     @IBAction func clicked() {
-      sendNext(self.viewModel.clickSink, ())
     }
 
 }

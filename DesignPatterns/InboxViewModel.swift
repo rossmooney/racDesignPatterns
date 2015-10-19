@@ -9,33 +9,29 @@ import Foundation
 import ReactiveCocoa
 
 
-class InboxViewModel : DataModel {
-    //Inputs
-    let (inboxRefreshSignal, inboxRefreshSink) = Signal<(), NoError>.pipe()
-    let (clickSignal, clickSink) = Signal<(), NoError>.pipe()
+struct InboxViewModel: MessageRefreshType, LeadInfoType {
     
-    //Outputs
-    let (inboxStateSignal, inboxStateSink) = Signal<InboxState, NoError>.pipe()
+    var (refreshSignal, refreshSink) = Signal<(), NoError>.pipe()
+    var (stateSignal, stateSink) = Signal<InboxState, NoError>.pipe()
+    var disposable = CompositeDisposable()
     
-    override init() {
-        super.init()
-        
-        sendNext(self.inboxStateSink, InboxState.Default)
-        combineLatest(self.inboxRefreshSignal, self.clickSignal).observeNext({_ in
-            sendNext(self.inboxStateSink, InboxState.Waiting)
-            sendNext(self.refreshMessagesSink, ())
-            sendNext(self.reloadContactsSink, ())
-        })
-        
-        self.contactsUpdateStateSignal.observeNext({ state in
-            switch state {
-            case .Complete:
-                sendNext(self.inboxStateSink, InboxState.Done)
-            case .Error:
-                sendNext(self.inboxStateSink, InboxState.Done)
-            case .InProgress:
-                sendNext(self.inboxStateSink, InboxState.Waiting)
-            }
+    init() {
+        sendNext(self.stateSink, .Default)
+        self.refreshSignal.observeNext({ _ in
+            sendNext(self.stateSink, .Waiting)
+            let disposable = self.refreshMessages().start({ event in
+                switch event {
+                case .Completed:
+                    print("Refresh Complete")
+                    sendNext(self.stateSink, .Done)
+                case .Error(let error):
+                    print("Error occurred: \(error)")
+                    sendNext(self.stateSink, .Error)
+                default:break
+                }
+            
+            })
+            self.disposable.addDisposable(disposable)
         })
     }
 }
@@ -44,4 +40,5 @@ enum InboxState {
     case Default
     case Waiting
     case Done
+    case Error
 }

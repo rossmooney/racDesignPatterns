@@ -9,40 +9,106 @@
 import Foundation
 import ReactiveCocoa
 
-class DataModel {
-    
-    //Inputs
-    let (refreshMessagesSignal, refreshMessagesSink) = Signal<(), NoError>.pipe()
-    let (reloadContactsSignal, reloadContactsSink) = Signal<(), NoError>.pipe()
-    
-    //Outputs
-    let (contactsUpdateStateSignal, contactsUpdateStateSink) = Signal<ContactsUpdateState, NoError>.pipe()
-    
-    init() {
-        self.refreshMessagesSignal.observeNext({_ in self.refreshMessages() })
-        self.reloadContactsSignal.observeNext({_ in self.reloadContacts() })
-    }
-    
-    func refreshMessages() {
-        print("refreshingMessages")
-    }
-    
-    func reloadContacts() {
-        print("reloading contacts")
-        sendNext(self.contactsUpdateStateSink, ContactsUpdateState.InProgress)
-        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(3 * Double(NSEC_PER_SEC)))
-        dispatch_after(delayTime, dispatch_get_main_queue()) {
-            print("finished reloading contacts")
-            sendNext(self.contactsUpdateStateSink, ContactsUpdateState.Complete)
+// MARK: - Protocols
+protocol MessageRefreshType {
+}
 
+protocol MessageSendType {
+}
+
+protocol UserInfoType {
+}
+
+protocol LeadInfoType {
+}
+
+// MARK: - Extensions (Default implementations)
+
+extension MessageRefreshType {
+    func refreshMessages() -> SignalProducer<(), RefreshError> {
+        return SignalProducer { sink, disposable in
+            //Do real processing here (call API)
+            sendCompleted(sink)
         }
     }
 }
 
+extension MessageSendType {
+    func sendMessage(message: String, phoneNumber: String) -> SignalProducer<(), SendError> {
+        return SignalProducer { sink, disposable in
+            sendCompleted(sink)
+        }
+    }
+}
 
+extension UserInfoType {
+    func requestUserInfo() throws -> UserInfo {
+        do {
+            return try requestUserInfoFromCoreData()
+        } catch let error {
+            throw error
+        }
+    }
+}
 
-enum ContactsUpdateState {
-    case InProgress
-    case Complete
-    case Error
+extension LeadInfoType {
+    func requestLeadInfo(contactId: Int64) throws -> LeadInfo {
+        do {
+            return try requestLeadInfoFromCoreData(contactId)
+        } catch let error {
+            throw error
+        }
+    }
+}
+
+// MARK: - Error Types
+
+enum RefreshError : ErrorType {
+    case NetworkError
+    case ServerError
+}
+
+enum SendError : ErrorType {
+    case NetworkError
+    case ServerError
+}
+
+enum UserInfoError : ErrorType {
+    case CoreDataError
+}
+
+enum LeadInfoError: ErrorType {
+    case CoreDataError
+    case InvalidLeadError
+}
+
+// MARK: - Data Types
+
+struct UserInfo {
+    var firstName:String
+    var lastName:String
+    var phoneNumber:String
+}
+
+struct LeadInfo {
+    var firstName:String
+    var lastName:String
+    var phoneNumbers:[String]
+}
+
+// MARK: - Private Functions
+
+private func requestUserInfoFromCoreData() throws -> UserInfo {
+    return UserInfo(firstName: "Johann", lastName: "Bach", phoneNumber: "1234567890")
+}
+
+private func requestLeadInfoFromCoreData(contactId: Int64) throws -> LeadInfo {
+    switch contactId {
+    case 0:
+        throw LeadInfoError.InvalidLeadError
+    case 1:
+        return LeadInfo(firstName: "Jimmy", lastName: "John", phoneNumbers: ["1213345678", "1213345679"])
+    default:
+        throw LeadInfoError.InvalidLeadError
+    }
 }
